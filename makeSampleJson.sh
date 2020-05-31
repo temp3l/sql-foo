@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# create random JSON samples from CSV files
+
 for file in $(ls shorted/*.csv); do
   fileName=${file/shorted\//}
   fileName=${fileName/\.csv/\.json}

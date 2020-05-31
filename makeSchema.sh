@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# 1. colltect samples from CSV
+# 2. sniff/guess content-types
+# 3. generate SQL-Statements
+# 4. threaded exec
+
 mkdir -p schemas
 echo -n "" > cmds.list
 echo -n "" > pumps.list
@@ -23,7 +28,7 @@ for _file in $(ls tables/*.csv | sed 's/^tables\///'); do
       tableName="none_${now}"
     fi
     # CMD="\"xsv sample 100000 ${IN} | csvsql --dialect mysql --snifflimit 100000 -z 9261072 --tables $tableName > schemas/${tableName}.sql"\"
-    # csvsql --overwrite --snifflimit 1000 -z 9261072 --tables BANK --db mysql+mysqlconnector://box:xxx@localhost:3306/cb --insert tables/table_1-166.csv
+    # csvsql --overwrite --snifflimit 1000 -z 9261072 --tables BANK --db mysql+mysqlconnector://user:pass@localhost:3306/cb --insert tables/table_1-166.csv
 
 CMD=$(cat <<EOF
 "xsv sample 100000 ${IN} | csvsql --dialect mysql --snifflimit 100000 -z 9261072 --tables $tableName > schemas/${tableName}.sql"
@@ -35,7 +40,7 @@ TRANS=$(cat <<EOF
 EOF
 )
 PUMP=$(cat <<EOF
-"echo ${tableName} ; csvsql --overwrite --tables ${tableName} --db mysql+mysqlconnector://box:xxx@localhost:3306/cb --insert ${IN}"
+"echo ${tableName} ; csvsql --overwrite --tables ${tableName} --db mysql+mysqlconnector://user:pass@localhost:3306/cb --insert ${IN}"
 EOF
 )
     echo $TRANS >> trans.list

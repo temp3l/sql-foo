@@ -1,4 +1,9 @@
 #! /bin/bash
+
+# 1. parses a CSV file (oracle DB-Dump)
+# 2. generates commands for splitting that file into smaller chunks
+# 3. enjoy multithreaded execution
+
 # csvsql --dialect mysql --snifflimit 1000  --quoting 0 -z 9261072 test.csv > test.sql
 # Row 165 has 11 values, but Table only has 3 columns.
 # cat worldcitiespop.csv | sed -n '1,166p' > tables/abgabeart.csv
@@ -19,7 +24,7 @@ echo -n "" > worker.log
 
 #FILE=gpp.csv
 FILE=worldcitiespop.csv
-HEADERLINES=$(cat ${FILE} | egrep -ne '(^"[A-Z].*",|^"BIC"|^"SSO_TEILNEHMER_NUMMER")' |  grep -v "00:00:00"| sed 's/:.*//g' )
+HEADERLINES=$(cat ${FILE} | egrep -ne '(^"[A-Z].*",|^"KEY1"|^"KEY2")' |  grep -v "00:00:00"| sed 's/:.*//g' )
 COUNTER=1
 COUNTER2=2
 let array

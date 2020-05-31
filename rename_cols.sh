@@ -1,13 +1,20 @@
 #!/bin/bash
 
-# Parses Mysql/Oracle/Mariadb sql files  (Data and Schema-Dumps)
+# 1. parses SQL-Schemas & SQL-Dumps (Mysql/Oracle/Mariadb)
+# 2. grep/sed/match/replace all problems
+# 3. translate or camelify
+# 4. handle shitloads of data
+# creates:
+# 1. SQL-import file
+# 2. JSON "Lookup-Tables"
+
 DICTIONARY_FILE=translationTable.json
 # SQL_FILE=SQL_FULL_EXPORT.sql
 # SQL_FILE=SQL_STAGING_SCHEMA.sql
 # SQL_FILE=SQL_SMALL_EXPORT.sql
 SQL_FILE=SQL_SCHEMA_EXPORT_CB.sql
-SQLOUTFILE=.trash/translated.sql
-JSONOUTFILE=.trash/propMap.json
+SQLOUTFILE=dist/translated.sql
+JSONOUTFILE=dist/propMap.json
 
 
 let TABLE
@@ -26,7 +33,7 @@ do
   row=${line//\"} # removed all '"'
   row=${row//,}   # removed all ','
   row=${row//\ }  # removed all whitespace
-  key=${row%:*}
+  key=${row%:*}   # select key
   value=${row#*:} # echo "$key => $value"
   [ ! -z "${key}" ] && TRANSLATIONS[$key]=$value # echo "${TRANSLATIONS[zaehler]}"
 done < $DICTIONARY_FILE
