@@ -34,11 +34,11 @@ tools, utils, helpers for converting &amp; translating Mysql/Oracle/Mariadb SQL 
         "800"
     ]
   },
-  "HILFE_URL_item_object": {
-    "$id": "#/definitions/HILFE_URL_item_object",
+  "help_url_object": {
+    "$id": "#/definitions/help_url_object",
     "type": "object",
     "title": "HILFE_URL_item_object",
-    "description": "HILFE_URL_item_object description",
+    "description": "help_url_object description",
     "properties": {
         "siteKey": {
             "$ref": "#/definitions/siteKey"
